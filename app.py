@@ -7,6 +7,11 @@ def create_app():
     @app.route('/' ,methods=['GET', 'POST'])
     def connect_with_java():
         return "Flask Server & java are Working Successfully"
+    
+    # 이미지 수신 테스트용 blueprint
+    from views import test_views
+    app.register_blueprint(test_views.bp)
+    
     return app
 
 app = create_app()
