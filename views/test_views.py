@@ -30,7 +30,7 @@ def showImage():
             return jsonify(response_data)
         except Exception as e:
             
-            print(e)
+            print("error: " + e)
             # 예외 처리
             error_data = {"status": "error", "message": str(e)}
             return jsonify(error_data), 500  # 500은 Internal Server Error를 나타냄
