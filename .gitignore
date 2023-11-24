@@ -125,13 +125,15 @@ celerybeat.pid
 
 # Environments
 .env
-.aquaman-venv
+.venv
 env/
-aquaman-venv/
+venv/
 ENV/
 env.bak/
 venv.bak/
-
+aquaman-venv/Lib
+.aquaman-venv
+/Lib
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -186,4 +188,3 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,venv
-
