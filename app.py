@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_migrate import Migrate
 
 app = Flask(__name__)
@@ -11,6 +11,15 @@ def create_app():
     # 이미지 수신 테스트용 blueprint
     from views import test_views
     app.register_blueprint(test_views.bp)
+    
+    from views import recognition_views
+    app.register_blueprint(recognition_views.bp)
+    
+    from views import disease_views
+    app.register_blueprint(disease_views.bp)
+    
+    from views import growth_forecast_views
+    app.register_blueprint(growth_forecast_views.bp)
     
     return app
 
