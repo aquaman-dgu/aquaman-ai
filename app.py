@@ -11,16 +11,7 @@ def create_app():
     # 이미지 수신 테스트용 blueprint
     from views import test_views
     app.register_blueprint(test_views.bp)
-    
-    from views import recognition_views
-    app.register_blueprint(recognition_views.bp)
-    
-    from views import disease_views
-    app.register_blueprint(disease_views.bp)
-    
-    from views import growth_forecast_views
-    app.register_blueprint(growth_forecast_views.bp)
-    
+
     return app
 
 app = create_app()

@@ -14,7 +14,7 @@ def showImage():
         try:  
             print(request.form)
             
-            # spring boot로부터 받은 이미지 처리리
+            # spring boot로부터 받은 이미지 처리
             img_data = request.data
             img_array = np.frombuffer(img_data, dtype=np.uint8)
             image = Image.open(BytesIO(img_array))
