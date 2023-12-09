@@ -23,5 +23,5 @@ def predict(current_length, current_weight, current_feed):
     future_weight = weight.predict(weight_df)
     
     list = [future_length[0], future_weight[0]]
-    
+        
     return list
