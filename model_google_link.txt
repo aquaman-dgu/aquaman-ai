@@ -1,0 +1,7 @@
+disease.pt
+https://drive.google.com/file/d/1Ap3O8lVE8xVb8Krl1N2GoUmrDY-h2Wsa/view?usp=sharing
+
+recognition.pt
+https://drive.google.com/file/d/13n7g-Gfx8Tro-4NA76fH2VcfCOvDnszm/view?usp=sharing
+
+이 둘을 받아서 각 folder의 models 폴더 안에 넣으면 된다.
