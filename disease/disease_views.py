@@ -4,8 +4,15 @@ from PIL import Image
 import base64
 from io import BytesIO
 import shutil
+import argparse
 
+# parser 등록
+parser = argparse.ArgumentParser(description='Argparse Tutorial')
+parser.add_argument('--test', default='sample1.jpg',help='test image data')
+parser.add_argument('--option',default='test',help='test or register')
+opt = parser.parse_args()
 
+print(opt.test)
 
 model_path = os.path.join("disease\\models\\", "disease.pt")
 disease =  YOLO(model_path)
@@ -70,7 +77,7 @@ def convert_images_to_base64(folder_path):
             encoded_image = base64.b64encode(image_bytesio.getvalue()).decode('utf-8')
             
             # '개체1', '개체2', ..., '개체N' 형식의 키로 데이터에 추가
-            key = f'개체{idx}'
+            key = f'fish{idx}'
             image_data[key] = encoded_image
 
     return image_data
@@ -106,5 +113,16 @@ def predict(folder_name : str):
     except Exception as e:
         return f"예측 중 오류 발생: {str(e)}"
     
-    
 
+def main():
+    if opt.option == 'modeling':
+        print("파일명은 : " + opt.test)
+        file = str(opt.test)
+        predict(file)
+    elif opt.option == 'test':
+        predict("sample1")
+    
+if __name__ == "__main__":
+    a = predict("sample1")
+    print(a)
+    main()
