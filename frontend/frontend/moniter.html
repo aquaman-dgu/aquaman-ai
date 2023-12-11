@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        width: 375px;
+        height: 856px;
+      }
+      header div {
+        width: 375px;
+        height: 79px;
+        background: var(--Primary, #4796bd);
+        box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+      }
+      #img1 {
+        position: relative;
+        top: 5%;
+        left: 5%;
+      }
+      #img2 {
+        position: relative;
+        top: 35%;
+        left: 65%;
+      }
+      header div span {
+        color: var(--Grey-Very-Light, #f4f9fa);
+        text-align: center;
+        font-family: Lato;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+      #header-text1 {
+        position: relative;
+        top: 5%;
+        left: 12%;
+      }
+      #header-text2 {
+        position: relative;
+        top: 45%;
+        left: -13%;
+      }
+      #header-text3 {
+        position: relative;
+        top: 45%;
+        left: -3%;
+      }
+      #main-text {
+        color: var(--Grey-Dark, #495d69);
+        text-align: center;
+        font-family: Lato;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 70px;
+        margin-left: 30px;
+      }
+      hr {
+        background: #c2c2c2;
+        width: 325px;
+        height: 1px;
+      }
+      #box {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+      }
+      .box-items {
+        width: 290px;
+        height: 35px;
+        border-radius: 5px;
+        background: var(--Gray-5, #e0e0e0);
+        border: none;
+        margin: auto;
+      }
+      #picture {
+        width: 324px;
+        height: 181px;
+        background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+        margin: auto;
+      }
+      #plus-minus {
+        display: flex;
+        width: 375px;
+        height: 50px;
+        position: relative;
+        left: 61%;
+      }
+      .button-container {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .rect-button {
+        width: 149.889px;
+        height: 32px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: var(--Primary, #4796bd);
+        color: var(--Grey-Very-Light, #f4f9fa);
+        font-family: Lato;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+        border: none;
+        border-radius: 5px;
+        margin: 10px auto;
+      }
+      .rect-button svg {
+        width: 150px;
+        height: 32px;
+        margin-right: 5px;
+      }
+      #add-picture-button{
+        display: flex;
+        border-radius: 10px;
+        width: 352px;
+        height: 32px;
+        justify-content: center;
+        border: 1px solid #4796BD;
+        background-color: white;
+        color: #4796BD;
+        line-height: 32px;
+      }
+      #monitoring-start{
+        width: 118px;
+        height: 35px;
+        border-radius: 25px;
+        background: var(--Primary, #4796BD);
+        box-shadow: 0px 5px 65px 0px rgba(0, 0, 0, 0.10);
+        margin: auto;
+        color: white;
+        color: var(--Grey-Very-Light, #F4F9FA);
+        text-align: center;
+        font-family: Lato;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 35px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div>
+          <img id="img1" src="./Group 38.png" alt="" /><span id="header-text1"
+            >어병검출</span
+          ><img id="img2" src="./Group 39.png" alt="" />
+          <span id="header-text2">사용자 입력값</span>&nbsp;&nbsp;
+          <span id="header-text3">검출결과</span>
+        </div>
+      </header>
+      <main>
+        <span id="main-text">검출하고 싶은 넙치</span>
+        <hr />
+        <div id="box">
+          <div></div>
+          <input
+            class="box-items"
+            type="text"
+            placeholder="&nbsp;현재 평균 길이:"
+          />
+          <input
+            class="box-items"
+            type="text"
+            placeholder="&nbsp;현재 평균 체중:"
+          />
+          <input
+            class="box-items"
+            type="text"
+            placeholder="&nbsp;현재 급이량:"
+          />
+          <hr style="margin-top: 7%" />
+          <input class="box-items" type="text" placeholder="&nbsp;사진" />
+          <div id="picture"></div>
+          <div class="button-container">
+            <div class="rect-button">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" width="150" height="32" viewBox="0 0 150 32" fill="none">
+                <rect x="0.4" y="0.4" width="149.089" height="31.2" rx="1.2" stroke="#4195B4" stroke-width="0.8"/>
+              </svg> -->
+              <div id="add-picture-button">+ 사진 추가</div>
+            </div>
+          </div>
+        </div>
+        <div id="plus-minus">
+          <img src="./plus.png" alt="" />
+          <img src="./minus.png" alt="" />
+        </div>
+        <div id="monitoring-start">어병 검출 시작</div>
+      </main>
+    </div>
+  </body>
+</html>
