@@ -30,8 +30,6 @@ base_path = '..\\static\\img\\'
 
 def convert_images_to_base64(folder_path):
     image_data = {}
-    print("여기까지")
-    print(folder_path)
     
     # 폴더 내 모든 파일 목록 가져오기
     files = [f for f in os.listdir(folder_path) if f.lower().endswith('.jpg')]
@@ -55,20 +53,21 @@ def convert_images_to_base64(folder_path):
 def predict(image_name : str):
     image_list = []
     path_name = base_path + image_name
+    print("경로: " + path_name)
     
     if not image_name:
         return "이미지가 올바르지 않습니다."
 
     try:
-        result = recog.predict(path_name, save = True, retina_masks=True, imgsz = 1280, 
-                               conf=0.7, save_crop=True, project=save_path, name=image_name[:-4])
+        result = recog.predict(path_name, save = True, retina_masks=True, imgsz = 640, 
+                               conf=0.2, save_crop=True, project=save_path, name=image_name[:-4])
         image_data = convert_images_to_base64(save_path + "\\" + image_name[:-4])
 
 
     except Exception as e:
         return f"예측 중 오류 발생: {str(e)}"
     
-    return image_data
+    return image_name[:-4]
 
 def main():
     
