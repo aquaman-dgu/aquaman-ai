@@ -9,6 +9,7 @@ import os
 import sys
 import json
 
+
 bp= Blueprint('test',__name__,url_prefix='/')
 
 #path adjusting
@@ -23,11 +24,37 @@ def showImage():
     try:  
         print(request.form)
         
-        # spring boot로부터 받은 이미지 처리
-        img_data = request.data
-        img_array = np.frombuffer(img_data, dtype=np.uint8)
-        image = Image.open(BytesIO(img_array))
+        global details
+        details = request.form
+        img_data = request.files['file']
+        image = img_data.read()
+
+        print(img_data)
+        length = float(details['length'])
+        weight = float(details['weight'])
+        feed = float(details['feed'])
         
+        print(length)
+        print(weight)
+        print(feed)
+
+        # 성장 예측 모델
+        growth_result = getGrowthModelResult(length, weight,feed)
+        
+        growth_result = str(growth_result)
+        print("gr:" + growth_result)
+        growth_result = eval(growth_result)
+        flength = str(growth_result[0]) # 소수 첫째 자리 출력
+        fweight = str(growth_result[1]) # 소수 첫째 자리 출력
+        
+        print("7일후 체장: "+ flength)
+        print("7일후 체중: " + fweight)
+
+            
+        # spring boot로부터 받은 이미지 처리
+        
+        img_array = np.frombuffer(image, dtype=np.uint8)
+        image = Image.open(BytesIO(img_array))
         # 유니크한 파일명 생성해서 이미지 static/img/파일명 저장
         img_name = uniquenumber()
         p = get_path("C:/Users/roger/aquaman-ai")
@@ -38,13 +65,16 @@ def showImage():
         # 질병 모델 돌리기
         print("=== recognition model start ===")
 
-        result = getRecongnitionModelResult(img_name)
-        print(result)
+        recog_result = getRecongnitionModelResult(str(img_name))
         
-        
+        print("=== disease model start ===")
+        desease_result = getDiseaseResult(recog_result)
+        print("desease result: " + desease_result)
+        message = "image respond succesfully"
         success = "success"
-        message = "Image received successfully"
-        response_data = {"status": success, "message": message}
+        response_data = {"status": success, "message": message, "value" : desease_result, "length" : flength , "weight" : fweight}
+        
+        print(response_data)
         return jsonify(response_data)
     except Exception as e:
         
@@ -71,31 +101,36 @@ def uniquenumber():
 
 
 def getRecongnitionModelResult(img_name):
-    
     path = os.path.join(os.getcwd(), "recognition")
     print("현재 경로는: " + path)
     fpath = get_path(path)
     os.chdir(fpath)
-    cmd =['python','recognition_views.py','--test','%s' %(str(img_name))]
-    
-
-    fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True ).stdout
-   
-    ## 여기가 에러
-    stdout_data = fd_popen.read().split(":")
-
-    # 파일을 닫음 (중요)
+    img = img_name+".jpg"
+    cmd =['python','recognition_views.py','--test','%s' %(img)]
+    fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True,encoding='UTF-8' ).stdout
+    arr = []
+    arr = fd_popen.read().split('\\')
     fd_popen.close()
+    result = arr[0][0:len(img_name)]
+    print("결과: " + result)
+    return result
 
-
-    
 
 def getDiseaseResult(img_name):
-    cmd =['python','disease_views.py','--test','%s' %(img_name), '--option'  , '%s' %('modeling')]
-    fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True).stdout
+    fpath = get_path("C:/Users/roger/aquaman-ai/disease")
+    os.chdir(fpath)
+    print("현재 경로는: " + fpath)
+    cmd =['python','disease_views.py','--test','%s' %(img_name)]
+    fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True, encoding='utf-8').stdout
     data = fd_popen.read().strip()
     print("Data는 : " +  data)
+    return img_name
     
-if __name__ == "__main__":
 
-    getRecongnitionModelResult("202312105150.jpg")
+def getGrowthModelResult(length, weight,feed):
+    fpath = get_path("C:/Users/roger/aquaman-ai/growth-forecast")
+    os.chdir(fpath)
+    print("현재 경로는: " + fpath)
+    cmd = ['python', 'growth_forecast_views.py', '--test', str(length), str(weight), str(feed)]
+    result = subprocess.check_output(cmd, shell=True, encoding='utf-8' )
+    return result

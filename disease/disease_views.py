@@ -14,7 +14,7 @@ opt = parser.parse_args()
 
 print(opt.test)
 
-model_path = os.path.join("disease\\models\\", "disease.pt")
+model_path = os.path.join("models\\", "disease.pt")
 disease =  YOLO(model_path)
 
 base_path = "recognition\\"
@@ -84,7 +84,7 @@ def convert_images_to_base64(folder_path):
 
 def predict(folder_name : str):
     
-    path_name = base_path + folder_name + "\\crops\\넙치"
+    path_name = 'C:/Users/roger/aquaman-ai/recognition/'+folder_name+ "\\crops\\넙치"
     
     # 사진들의 이름 list  
     crops_list = os.listdir(path_name)
@@ -104,7 +104,7 @@ def predict(folder_name : str):
     try:
         for item in crops_list :
             result = disease.predict(folder_path + "\\" + item, save = True, retina_masks=True, imgsz = 640, 
-                               conf=0.7, project=save_path + folder_name + "\\disease", name='num')
+                               conf=0.3, project=save_path + folder_name + "\\disease", name='num')
         move_jpg_files_and_delete_subfolders(save_path + folder_name + "\\disease")
         images_data = convert_images_to_base64(save_path + folder_name + "\\disease")
         return images_data
@@ -115,14 +115,8 @@ def predict(folder_name : str):
     
 
 def main():
-    if opt.option == 'modeling':
-        print("파일명은 : " + opt.test)
-        file = str(opt.test)
-        predict(file)
-    elif opt.option == 'test':
-        predict("sample1")
+    file = str(opt.test)
+    predict(file)
     
 if __name__ == "__main__":
-    a = predict("sample1")
-    print(a)
     main()

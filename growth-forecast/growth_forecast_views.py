@@ -1,11 +1,14 @@
 import pandas as pd
 import pickle
 import xgboost
+import argparse
 
-with open('./growth-forecast/model/xgb_length.pkl', 'rb') as file:
+
+
+with open('./model/xgb_length.pkl', 'rb') as file:
     length = pickle.load(file)
     
-with open('./growth-forecast/model/xgb_weight.pkl', 'rb') as file:
+with open('./model/xgb_weight.pkl', 'rb') as file:
    weight = pickle.load(file)
 
 def predict(current_length, current_weight, current_feed):
@@ -23,5 +26,15 @@ def predict(current_length, current_weight, current_feed):
     future_weight = weight.predict(weight_df)
     
     list = [future_length[0], future_weight[0]]
-        
-    return list
+    print(list)
+def main():
+    
+    parser = argparse.ArgumentParser(description='Growth Forecast Views')
+    parser.add_argument('--test', nargs=3, type=float, help='Test arguments (length weight feed)', required=True)
+    opt = parser.parse_args()
+    
+    length, weight, feed = opt.test
+    predict(length,weight,feed)
+    
+if __name__ == "__main__":
+    main()
